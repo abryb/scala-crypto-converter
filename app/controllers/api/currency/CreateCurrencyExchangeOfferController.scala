@@ -2,6 +2,7 @@ package controllers.api.currency
 
 import exception.NotSupportedCurrencyException
 import models.CurrencyExchangeOffer
+import json.Writers.NotSupportedCurrencyExceptionWrites
 
 import javax.inject._
 import play.api.mvc._
@@ -33,16 +34,16 @@ class CreateCurrencyExchangeOfferController @Inject()(
   }
 
   implicit val resultWrites: Writes[CurrencyExchangeOffer] = new Writes[CurrencyExchangeOffer] {
-    def writes(result: CurrencyExchangeOffer): JsValue = JsObject(Map(
-      "from" -> JsString(result.from)
-    )).deepMerge(
+    def writes(result: CurrencyExchangeOffer): JsValue = Json.obj(
+      "from" -> result.from
+    ).deepMerge(
       JsObject(result.to.map {
-        case (key, value) => (key, JsObject(Map(
-          "rate" -> JsNumber(value.rate),
-          "amount" -> JsNumber(value.amount),
-          "result" -> JsNumber(value.result),
-          "fee" -> JsNumber(value.fee)
-        )))
+        case (key, value) => (key, Json.obj(
+          "rate" -> value.rate,
+          "amount" -> value.amount,
+          "result" -> value.result,
+          "fee" -> value.fee
+        ))
       }
       )
     )
@@ -51,12 +52,6 @@ class CreateCurrencyExchangeOfferController @Inject()(
   implicit val errorFormWrites: Writes[Form[Input]] = new Writes[Form[Input]] {
     def writes(errorForm: Form[Input]): JsValue = JsObject(Map(
       "errors" -> JsObject(errorForm.errors.map(e => (e.key, JsString(e.message))).toMap)
-    ))
-  }
-
-  implicit val exceptionWrites: Writes[NotSupportedCurrencyException] = new Writes[NotSupportedCurrencyException] {
-    def writes(exception: NotSupportedCurrencyException): JsValue = JsObject(Map(
-      "error" -> JsString(exception.getMessage),
     ))
   }
 

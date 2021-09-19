@@ -2,6 +2,7 @@ package controllers.api.currency
 
 import models.CurrencyRates
 import exception.NotSupportedCurrencyException
+import json.Writers.NotSupportedCurrencyExceptionWrites
 import javax.inject._
 import play.api.mvc._
 import play.api.libs.json._
@@ -18,16 +19,10 @@ class GetCurrencyRatesController @Inject()(
                                           ) extends AbstractController(cc) {
 
   implicit val resultWrites: Writes[CurrencyRates] = new Writes[CurrencyRates] {
-    def writes(rates: CurrencyRates): JsValue = JsObject(Map(
-      "source" -> JsString(rates.baseCurrencyCode),
+    def writes(rates: CurrencyRates): JsObject = Json.obj(
+      "source" -> rates.baseCurrencyCode,
       "rates" -> JsObject(rates.rates.view.mapValues(JsNumber(_)).toMap)
-    ))
-  }
-
-  implicit val exceptionWrites: Writes[NotSupportedCurrencyException] = new Writes[NotSupportedCurrencyException] {
-    def writes(exception: NotSupportedCurrencyException): JsValue = JsObject(Map(
-      "error" -> JsString(exception.getMessage),
-    ))
+    )
   }
 
   def apply(code: String, filter: List[String]): Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
