@@ -19,8 +19,8 @@ class DefaultCurrencyExchangeOfferMaker @Inject()(ratesProvider: RatesProvider)
         .map(currency => {
 
           val rate = rates(currency)
-          val result = rate * amount * 0.99
           val fee = amount * 0.01
+          val result = rate * (amount - fee)
           (currency, CurrencyExchangeOfferOption(rate, amount, result, fee))
         })
       CurrencyExchangeOffer(from, options.toMap)

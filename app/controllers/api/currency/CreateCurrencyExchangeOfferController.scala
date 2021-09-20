@@ -34,9 +34,9 @@ class CreateCurrencyExchangeOfferController @Inject()(
   }
 
   implicit val resultWrites: Writes[CurrencyExchangeOffer] = new Writes[CurrencyExchangeOffer] {
-    def writes(result: CurrencyExchangeOffer): JsValue = Json.obj(
-      "from" -> result.from
-    ).deepMerge(
+    def writes(result: CurrencyExchangeOffer): JsValue = JsObject(Map(
+      "from" -> JsString(result.from)
+    )).deepMerge(
       JsObject(result.to.map {
         case (key, value) => (key, Json.obj(
           "rate" -> value.rate,

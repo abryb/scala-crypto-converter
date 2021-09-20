@@ -8,13 +8,11 @@ import org.scalatestplus.mockito._
 import org.mockito.Mockito._
 import play.api.libs.json.Json
 import play.api.mvc.Results.{BadRequest, Ok}
-import play.api.mvc.{Action, AnyContent, AnyContentAsEmpty, Result}
+import play.api.mvc.{AnyContentAsEmpty, Result}
 import play.api.test.{FakeHeaders, FakeRequest}
-import play.api.test.Helpers.{GET, POST, stubControllerComponents}
-import play.mvc.Action
+import play.api.test.Helpers.{GET, stubControllerComponents}
 import services.currency.rates.RatesProvider
 
-import javax.transaction.NotSupportedException
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import scala.util.{Success, Try}
