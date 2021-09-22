@@ -7,7 +7,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.13.6"
 
-routesImport += "binders.Binders._"
+routesImport += "controllers.binders.Binders._"
 
 libraryDependencies += guice
 libraryDependencies += ws
@@ -18,4 +18,4 @@ libraryDependencies += "org.scalatestplus" %% "mockito-3-4" % "3.2.9.0" % "test"
 //TwirlKeys.templateImports += "com.github.abryb.controllers._"
 
 // Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "com.github.abryb.binders._"
+// play.sbt.routes.RoutesKeys.routesImport += "com.github.abryb.controllers.api.binders._"

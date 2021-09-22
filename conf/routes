@@ -3,5 +3,4 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-GET     /currencies/:code                 controllers.api.currency.GetCurrencyRatesController.apply(code: String, filter: List[String])
-POST    /currencies/exchange              controllers.api.currency.CreateCurrencyExchangeOfferController.apply()
+GET     /currencies/:code                 controllers.api.currencymarket.CurrencyController.getExchangeRates(code: String, filter: List[String])
