@@ -1,8 +1,8 @@
-package model.currencymarket.service
+package model.currencymarket.market
 
 import com.google.inject.ImplementedBy
-import model.currencymarket.{ExchangeRate, Market}
-import model.currencymarket.service.provider.MessariExchangeRatesProvider
+import model.currencymarket.ExchangeRate
+import model.currencymarket.market.provider.MessariExchangeRatesProvider
 
 import scala.concurrent.Future
 

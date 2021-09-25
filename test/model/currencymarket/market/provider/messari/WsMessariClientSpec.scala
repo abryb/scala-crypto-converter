@@ -1,5 +1,6 @@
-package model.currencymarket.service.provider.messari
+package model.currencymarket.market.provider.messari
 
+import model.currencymarket.market.provider.messari.WsMessariClient
 import org.scalatestplus.play._
 import play.api.libs.json._
 import play.api.mvc._

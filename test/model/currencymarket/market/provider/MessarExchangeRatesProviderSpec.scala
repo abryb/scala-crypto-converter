@@ -1,7 +1,8 @@
-package model.currencymarket.service.provider
+package model.currencymarket.market.provider
 
-import model.currencymarket.{Currency, CurrencyPair, ExchangeRate, Market}
-import model.currencymarket.service.provider.messari.MessariClient
+import model.currencymarket.market.provider.MessariExchangeRatesProvider
+import model.currencymarket.market.provider.messari.MessariClient
+import model.currencymarket.{Currency, CurrencyPair, ExchangeRate}
 import org.scalatestplus.play._
 import org.scalatestplus.mockito._
 import org.mockito.Mockito._

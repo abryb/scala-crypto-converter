@@ -1,12 +1,12 @@
-package model.currencymarket.service.provider
+package model.currencymarket.market.provider
 
-import model.currencymarket.service.provider.messari.{MessariClient, WsMessariClient}
-import model.currencymarket.service.ExchangeRatesProvider
-import model.currencymarket.{Currency, CurrencyPair, ExchangeRate, Market}
+import model.currencymarket.market.ExchangeRatesProvider
+import model.currencymarket.market.provider.messari.MessariClient
+import model.currencymarket.{Currency, CurrencyPair, ExchangeRate}
 
 import javax.inject.Inject
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class MessariExchangeRatesProvider @Inject() (messariClient: MessariClient) extends ExchangeRatesProvider {
   override def getExchangeRates: Future[Set[ExchangeRate]] = {

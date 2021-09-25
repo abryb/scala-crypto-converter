@@ -1,7 +1,7 @@
-package controllers.api.currencymarket
+package controllers.api
 
 import model.currencymarket.api._
-import model.currencymarket.{Currency, MarketFacade}
+import model.currencymarket.Currency
 import play.api.libs.json.Json
 import play.api.mvc._
 import view.json.currencymarket._
@@ -11,22 +11,22 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 
-class CurrencyController @Inject()(
+class CurrencyMarketController @Inject()(
                                   cc: ControllerComponents,
                                   marketFacade: MarketFacade
                                   ) extends AbstractController(cc) {
 
   def getExchangeRates(code: String, filter: List[String]): Action[AnyContent] = Action.async { implicit request: Request[AnyContent] =>
     // TODO wrap all in future
-    // TODO move prepare params somewhere else
+    // TODO move create command somewhere else
     val baseCurrency = Currency(code)
     val quoteCurrencies = filter match {
       case Nil => None
       case currencyCodes => Some(currencyCodes.map(Currency))
     }
-    val params = GetExchangeRatesParams(baseCurrency = baseCurrency, quoteCurrencies = quoteCurrencies)
+    val params = GetExchangeRatesCommand(baseCurrency = baseCurrency, quoteCurrencies = quoteCurrencies)
     marketFacade
-      .getExchangeRates(GetExchangeRatesParams(baseCurrency = baseCurrency, quoteCurrencies = quoteCurrencies))
+      .getExchangeRates(GetExchangeRatesCommand(baseCurrency = baseCurrency, quoteCurrencies = quoteCurrencies))
       .map((result: GetExchangeRatesResult) => {
         // TODO exception handling?
         // TODO better view handling

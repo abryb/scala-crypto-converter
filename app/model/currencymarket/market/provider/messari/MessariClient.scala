@@ -1,4 +1,4 @@
-package model.currencymarket.service.provider.messari
+package model.currencymarket.market.provider.messari
 
 import com.google.inject.ImplementedBy
 

@@ -1,6 +1,7 @@
 package controllers.binders
 
-import play.api.mvc.QueryStringBindable
+import model.currencymarket.api.GetExchangeRatesCommand
+import play.api.mvc.{PathBindable, QueryStringBindable}
 
 object Binders {
 
@@ -25,5 +26,7 @@ object Binders {
     override def unbind(key: String, filter: List[String]): String = {
       listOfStringBinder.unbind(key, filter)
     }
+
+
   }
 }

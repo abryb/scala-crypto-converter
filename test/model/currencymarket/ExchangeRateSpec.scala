@@ -8,22 +8,39 @@ class ExchangeRateSpec extends PlaySpec {
     val USD = Currency("USD")
     val PLN = Currency("PLN")
 
-    "compose throws IllegalArgumentException invalid exchange rate given" in {
-      val eurUsd = ExchangeRate(CurrencyPair(EUR, USD), 1.2)
-      val usdPln = ExchangeRate(CurrencyPair(USD, PLN), 4.0)
-      assertThrows[IllegalArgumentException] {
-        usdPln.compose(eurUsd)
+    "compose" must {
+      "throw IllegalArgumentException invalid exchange rate given" in {
+        val eurUsd = ExchangeRate(CurrencyPair(EUR, USD), 1.2)
+        val usdPln = ExchangeRate(CurrencyPair(USD, PLN), 4.0)
+        assertThrows[IllegalArgumentException] {
+          usdPln.compose(eurUsd)
+        }
+        assertThrows[IllegalArgumentException] {
+          usdPln.compose(eurUsd.inverse)
+        }
       }
-      assertThrows[IllegalArgumentException] {
-        usdPln.compose(eurUsd.inverse)
+
+      "return right ExchangeRate" in {
+        val eurUsd = ExchangeRate(CurrencyPair(EUR, USD), 1.25)
+        val usdPln = ExchangeRate(CurrencyPair(USD, PLN), 4.0)
+
+        eurUsd.compose(usdPln) mustBe ExchangeRate(CurrencyPair(EUR, PLN), 5)
       }
     }
 
-    "compose returns right ExchangeRate" in {
-      val eurUsd = ExchangeRate(CurrencyPair(EUR, USD), 1.25)
-      val usdPln = ExchangeRate(CurrencyPair(USD, PLN), 4.0)
+    "rebase" must {
+      "return right result" in {
+        val eurUsd = ExchangeRate(CurrencyPair(EUR, USD), 1.25)
+        eurUsd.rebase(EUR) mustBe eurUsd
+        eurUsd.rebase(USD) mustBe eurUsd.inverse
+      }
 
-      eurUsd.compose(usdPln) mustBe ExchangeRate(CurrencyPair(EUR, PLN), 5)
+      "throw IllegalArgumentException if currency not from pair given" in {
+        val eurUsd = ExchangeRate(CurrencyPair(EUR, USD), 1.25)
+        assertThrows[IllegalArgumentException] {
+          eurUsd.rebase(PLN)
+        }
+      }
     }
   }
 }
